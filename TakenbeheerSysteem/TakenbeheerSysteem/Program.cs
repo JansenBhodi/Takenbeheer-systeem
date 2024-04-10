@@ -1,3 +1,7 @@
+using Microsoft.Extensions.DependencyInjection;
+using System.Text;
+using TakenbeheerDAL.Task;
+
 namespace TakenbeheerSysteem
 {
     public class Program
@@ -6,8 +10,17 @@ namespace TakenbeheerSysteem
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            //IServiceCollection services = new ServiceCollection();
+
+            //Startup startup = new Startup();
+            //startup.ConfigureServices(services);
+
+            //IServiceProvider serviceProvider = services.BuildServiceProvider();
+
             // Add services to the container.
             builder.Services.AddRazorPages();
+            builder.Services.AddSingleton<ITask, TakenbeheerCore.Task.Task>();
+            builder.Services.AddSingleton<ITaskRepository, TaskRepository>();
 
             var app = builder.Build();
 
