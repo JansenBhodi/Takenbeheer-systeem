@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TakenbeheerCore.SubTask;
+using TakenbeheerDAL.Task;
 
 namespace TakenbeheerCore.Task
 {
-    public interface ITask
+    public interface ITaskRepository
     {
-        Subtask[] GetSubtasks();
-        public List<Task> ReturnAllTasks();
+        public List<TaskDTO> ReturnAllTasks();
     }
 }

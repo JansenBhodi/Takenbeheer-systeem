@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TakenbeheerCore.Employee;
 using TakenbeheerDAL.Subtask;
 
 namespace TakenbeheerDAL.Task
@@ -16,6 +17,7 @@ namespace TakenbeheerDAL.Task
         public DateOnly Deadline { get; set; }
         public bool IsVisible { get; set; }
         public List<SubtaskDTO>? Subtasks { get; set; }
+        public List<WorkerEmployeeDTO>? Workers { get; set; }
 
         public TaskDTO(int id, string title, string desc, int progress, DateOnly date, bool isVisible)
         {
@@ -27,20 +29,5 @@ namespace TakenbeheerDAL.Task
             IsVisible = isVisible;
         }
 
-        public bool RegisterInitSubtasks(List<SubtaskDTO> subtasks)
-        {
-            try
-            {
-                foreach (SubtaskDTO subtask in subtasks)
-                {
-                    Subtasks.Add(subtask);
-                }
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
     }
 }

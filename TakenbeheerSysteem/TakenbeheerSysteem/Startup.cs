@@ -1,4 +1,4 @@
-﻿using TakenbeheerDAL.Task;
+﻿using TakenbeheerDAL;
 
 namespace TakenbeheerSysteem
 {

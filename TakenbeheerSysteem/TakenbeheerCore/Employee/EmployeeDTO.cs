@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TakenbeheerCore.SubTask
+namespace TakenbeheerCore.Employee
 {
-    public interface ISubtask
+    public class WorkerEmployeeDTO
     {
     }
 }

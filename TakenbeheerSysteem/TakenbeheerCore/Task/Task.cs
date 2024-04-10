@@ -1,14 +1,12 @@
-﻿using TakenbeheerCore.SubTask;
-using TakenbeheerCore.Worker;
+﻿using TakenbeheerCore.Employee;
+using TakenbeheerCore.SubTask;
 
 namespace TakenbeheerCore.Task
 {
-    public class Task : ITask
+    public class Task
     {
         #region Parameters
-
         private int _id;
-        public int Id { get { return _id; } }
 
         private string _title;
         public string Title { get { return _title; } }
@@ -25,48 +23,41 @@ namespace TakenbeheerCore.Task
         private bool _isVisible;
         public bool IsVisible { get { return _isVisible; } }
 
-        private Subtask[] _subtasks;
-        public Subtask[] Subtasks { get { return _subtasks; } }
-        private Employee[] _employees;
-        public Employee[] Employees { get { return _employees; } }
+        private List<Subtask> _subtasks;
+        public List<Subtask> Subtasks { get { return _subtasks; } }
+
+        private List<WorkerEmployee> _employees;
+        public List<WorkerEmployee> Employees { get { return _employees; } }
 
         #endregion
 
-        public Task()
+        public Task(int id, string title, string desc, int progress, DateOnly deadline, bool isvisible, List<Subtask> subtasks, List<WorkerEmployee> employees)
         {
+            _id = id;
+            _title = title;
+            _description = desc;
+            _progress = (ProgressState)progress;
+            _deadline = deadline;
+            _isVisible = isvisible;
+            _employees = employees;
+            _subtasks = subtasks;
 
+            //Fetch all subtasks involved with this task
+            //Fetch all Employees involved with this task
+        }
+        public Task(int id, string title, string desc, int progress, DateOnly deadline, bool isvisible)
+        {
+            _id = id;
+            _title = title;
+            _description = desc;
+            _progress = (ProgressState)progress;
+            _deadline = deadline;
+            _isVisible = isvisible;
+
+
+            //Fetch all subtasks involved with this task
+            //Fetch all Employees involved with this task
         }
 
-        public List<Task> ReturnAllTasks()
-        {
-            return new List<Task>()
-            {
-                new Task()
-                {
-                    _title = "Title1",
-                    _description = "desc1"
-                },
-                new Task()
-                {
-                    _title = "Title2",
-                    _description = "desc2"
-                },
-                new Task()
-                {
-                    _title = "Title3",
-                    _description = "desc3"
-                }
-            };
-        }
-
-        public Subtask[] GetSubtasks()
-        {
-            return new Subtask[0];
-        }
-
-        public string test()
-        {
-            return "This is a test";
-        }
     }
 }

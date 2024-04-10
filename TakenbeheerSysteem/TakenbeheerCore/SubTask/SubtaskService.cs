@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TakenbeheerDAL.Task
+namespace TakenbeheerCore.SubTask
 {
-    public interface ITaskRepository
+    internal class SubtaskService
     {
-        public List<TaskDTO> ReturnAllTasks();
     }
 }

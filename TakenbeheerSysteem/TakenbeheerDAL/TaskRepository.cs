@@ -4,13 +4,15 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using TakenbeheerCore.Task;
 using System.Threading.Tasks;
+using TakenbeheerDAL.Task;
 
-namespace TakenbeheerDAL.Task
+namespace TakenbeheerDAL
 {
     public class TaskRepository : ITaskRepository
     {
-        private readonly DbConn _conn = new DbConn(); 
+        private readonly DbConn _conn = new DbConn();
 
         public TaskRepository()
         {
@@ -32,7 +34,13 @@ namespace TakenbeheerDAL.Task
             List<TaskDTO> result = new List<TaskDTO>();
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                TaskDTO task = new TaskDTO(Convert.ToInt32(dt.Rows[i]["Id"]), dt.Rows[i]["Title"].ToString(), dt.Rows[i]["Description"].ToString(), Convert.ToInt32(dt.Rows[i]["Progress"]), DateOnly.FromDateTime(Convert.ToDateTime(dt.Rows[i]["Deadline"])), Convert.ToBoolean(dt.Rows[i]["IsVisible"]));
+                TaskDTO task = new TaskDTO(
+                    Convert.ToInt32(dt.Rows[i]["Id"]),
+                    dt.Rows[i]["Title"].ToString(),
+                    dt.Rows[i]["Description"].ToString(),
+                    Convert.ToInt32(dt.Rows[i]["Progress"]),
+                    DateOnly.FromDateTime(Convert.ToDateTime(dt.Rows[i]["Deadline"])),
+                    Convert.ToBoolean(dt.Rows[i]["IsVisible"]));
                 result.Add(task);
             }
 

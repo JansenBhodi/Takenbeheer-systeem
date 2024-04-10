@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TakenbeheerCore.Team
+namespace TakenbeheerCore.Employee
 {
-    public interface ITeam
+    public class WorkerEmployee
     {
     }
 }

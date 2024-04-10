@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TakenbeheerCore.Worker
+namespace TakenbeheerCore.Employee
 {
-    public interface IWorker
+    public interface IEmployeeRepository
     {
     }
 }
