@@ -59,5 +59,10 @@ namespace TakenbeheerCore.Task
             //Fetch all Employees involved with this task
         }
 
+        public Task(TaskDTO taskDto)
+        {
+            
+        }
+
     }
 }

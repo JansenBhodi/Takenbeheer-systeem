@@ -20,7 +20,7 @@ namespace TakenbeheerSysteem
 
             // Add services to the container.
             builder.Services.AddRazorPages();
-            builder.Services.AddSingleton<ITaskRepository, TaskRepository>();
+            builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 
             var app = builder.Build();
 

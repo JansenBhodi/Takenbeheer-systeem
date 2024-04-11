@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TakenbeheerCore.SubTask
 {
-    public class Subtask : ISubtask
+    public class Subtask
     {
 
     }

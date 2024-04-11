@@ -1,21 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TakenbeheerCore.Task;
-using TakenbeheerDAL.Task;
+
 
 namespace TakenbeheerSysteem.Pages.Task
 {
     public class IndexModel : PageModel
     {
-        ITaskRepository _taskRepository;
-        public List<TaskDTO> taskList = new List<TaskDTO>();
+        TaskService taskService;
+        public List<TakenbeheerCore.Task.Task> taskList;
         public string TestString;
 
-        public void OnGet([FromServices] ITaskRepository taskRepository)
+        public IndexModel(ITaskRepository taskRepository)
         {
-            _taskRepository = taskRepository;
-
-            taskList = _taskRepository.ReturnAllTasks();
+            taskService = new TaskService(taskRepository);
+        }
+        public void OnGet()
+        {
+            taskList = taskService.ReturnAllTasks();
         }
     }
 }

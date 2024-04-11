@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace TakenbeheerCore.Team
 {
-    public class Team : ITeam
+    public class Team
     {
+
+
     }
 }
