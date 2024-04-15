@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
+using TakenbeheerCore.Employee;
 using TakenbeheerCore.Task;
 using TakenbeheerDAL;
 
@@ -21,6 +22,7 @@ namespace TakenbeheerSysteem
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
             var app = builder.Build();
 
