@@ -6,7 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TakenbeheerCore.Employee;
-using TakenbeheerDAL.Task;
+using MySqlConnector;
+using System.Reflection.PortableExecutable;
 
 namespace TakenbeheerDAL
 {
@@ -28,42 +29,70 @@ namespace TakenbeheerDAL
                                   "WHERE TeamID = @teamid";
             command.Parameters.AddWithValue("@teamid", teamId);
 
-            SqlDataReader reader = command.ExecuteReader();
-
-            DataTable dt = new DataTable();
-            dt.Load(reader);
             List<WorkerEmployeeDTO> result = new List<WorkerEmployeeDTO>();
-            for (int i = 0; i < dt.Rows.Count; i++)
+
+            try
             {
-                WorkerEmployeeDTO employee = new WorkerEmployeeDTO();
-                employee.Id = Convert.ToInt32(dt.Rows[i]["Id"]);
-                employee.Name = dt.Rows[i]["Name"].ToString();
-                result.Add(employee);
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        WorkerEmployeeDTO entry = new WorkerEmployeeDTO(
+                            reader.GetInt32("Id"),
+                            reader.GetInt32("TeamID"),
+                            reader.GetString("Role"),
+                            reader.GetString("Name"),
+                            reader.GetString("Email"));
+                        result.Add(entry);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                result = null;
+                
+            }
+            finally
+            {
+                _conn.ConnString.Close();
             }
 
-            _conn.ConnString.Close();
             return result;
         }
 
-        public WorkerEmployeeDTO GetEmployee(int employeeId)
+        public WorkerEmployeeDTO? GetEmployee(int employeeId)
         {
             _conn.ConnString.Open();
+            WorkerEmployeeDTO result = null;
 
-            SqlCommand command = _conn.ConnString.CreateCommand();
-            command.CommandText = "SELECT * FROM Employee " +
+            SqlCommand employeecmd = _conn.ConnString.CreateCommand();
+            employeecmd.CommandText = "SELECT * FROM Employee " +
                                   "WHERE ID = @employeeid";
-            command.Parameters.AddWithValue("@employeeid", employeeId);
+            employeecmd.Parameters.AddWithValue("@employeeid", employeeId);
 
-            SqlDataReader reader = command.ExecuteReader();
-
-            DataTable dt = new DataTable();
-            dt.Load(reader);
-            WorkerEmployeeDTO result = new WorkerEmployeeDTO();
-            for (int i = 0;i < dt.Rows.Count; i++)
+            try
             {
-                result.Id = Convert.ToInt32(dt.Rows[i]["Id"]);
-                result.Name = dt.Rows[i]["Name"].ToString();
+                using (SqlDataReader employeeReader = employeecmd.ExecuteReader())
+                {
+                    while (employeeReader.Read())
+                    {
+                        result = new WorkerEmployeeDTO(
+                            employeeReader.GetInt32("Id"),
+                            employeeReader.GetInt32("TeamID"),
+                            employeeReader.GetString("Role"),
+                            employeeReader.GetString("Name"),
+                            employeeReader.GetString("Email"),
+                            employeeReader.GetString("Address"),
+                            employeeReader.GetString("PostalCode"));
+                    }
+                }
             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
 
             _conn.ConnString.Close();
             return result;
@@ -98,10 +127,15 @@ namespace TakenbeheerDAL
 
             SqlCommand command = _conn.ConnString.CreateCommand();
             command.CommandText = "INSERT INTO Employee " +
-                                  "(ID, Name) " +
-                                  "VALUES (@employeeid, @employeename)";
-            command.Parameters.AddWithValue("@employeeid", employee.Id);
-            command.Parameters.AddWithValue("@employeename", employee.Name);
+                                  "(TeamId, Name, Role, Email, Password, Address, PostalCode) " +
+                                  "VALUES (@teamid, @name, @role, @email, @password, @adddress, @postalcode)";
+            command.Parameters.AddWithValue("@teamid", employee.TeamId);
+            command.Parameters.AddWithValue("@name", employee.Name);
+            command.Parameters.AddWithValue("@role", employee.Role);
+            command.Parameters.AddWithValue("@email", employee.Email);
+            command.Parameters.AddWithValue("@password", employee.Password);
+            command.Parameters.AddWithValue("@adddress", employee.Address);
+            command.Parameters.AddWithValue("@postalcode", employee.PostalCode);
 
             try
             {

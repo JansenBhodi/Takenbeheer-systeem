@@ -1,0 +1,25 @@
+﻿@page
+@model TakenbeheerSysteem.Pages.Login.LoginModel
+@{
+
+    <div>
+        <h1>
+            Login
+        </h1>
+        <form method="post">
+            <div>
+                <h2>Email:</h2>
+                <input name="Email" type="email" required />
+                <h2>Password:</h2>
+                <input name="Password" type="password" required />
+                <br />
+                <input class="text-yellow" type="submit" value="Login" />
+            </div>
+        </form>
+        <br />
+        <form method="get">
+            <button asp-page="/Login/Register">Register Now</button>
+        </form>
+    </div>
+
+}

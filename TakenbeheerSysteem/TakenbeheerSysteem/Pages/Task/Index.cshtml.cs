@@ -8,7 +8,7 @@ namespace TakenbeheerSysteem.Pages.Task
     public class IndexModel : PageModel
     {
         TaskService taskService;
-        public List<TakenbeheerCore.Task.Task> taskList;
+        public List<TakenbeheerCore.Task.Worktask> taskList;
         public string TestString;
 
         public IndexModel(ITaskRepository taskRepository)

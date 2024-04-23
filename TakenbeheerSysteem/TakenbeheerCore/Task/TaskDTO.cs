@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TakenbeheerCore.Employee;
-using TakenbeheerDAL.Subtask;
+using TakenbeheerCore.Subtask;
 
-namespace TakenbeheerDAL.Task
+namespace TakenbeheerCore.Task
 {
     public class TaskDTO
     {
@@ -17,8 +17,9 @@ namespace TakenbeheerDAL.Task
         public DateOnly Deadline { get; set; }
         public bool IsVisible { get; set; }
         public List<SubtaskDTO>? Subtasks { get; set; }
-        public List<WorkerEmployeeDTO>? Workers { get; set; }
+        public List<WorkerEmployeeDTO>? Employees { get; set; }
 
+        //Detail page Task
         public TaskDTO(int id, string title, string desc, int progress, DateOnly date, bool isVisible)
         {
             Id = id;
@@ -29,5 +30,33 @@ namespace TakenbeheerDAL.Task
             IsVisible = isVisible;
         }
 
+        //detail page employee
+        public TaskDTO(int id, string title, DateOnly date)
+        {
+            Id = id;
+            Title = title;
+            Deadline = date;
+        }
+
+        //Create task
+        public TaskDTO(string title, string desc, int progress, DateOnly date, bool isVisible)
+        {
+            Title = title;
+            Description = desc;
+            Progress = progress;
+            Deadline = date;
+            IsVisible = isVisible;
+        }
+
+        //Update task
+        public TaskDTO(Worktask task)
+        {
+            Id = task.Id;
+            Title = task.Title;
+            Description = task.Description;
+            Progress = (int)task.Progress;
+            Deadline = task.Deadline;
+            IsVisible = task.IsVisible;
+        }
     }
 }

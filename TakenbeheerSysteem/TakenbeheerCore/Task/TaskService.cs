@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TakenbeheerCore.Employee;
+using TakenbeheerCore.Subtask;
 using TakenbeheerCore.SubTask;
-using TakenbeheerDAL.Task;
+
 
 namespace TakenbeheerCore.Task
 {
@@ -18,15 +19,15 @@ namespace TakenbeheerCore.Task
             _taskRepository = repo;
         }
 
-        public List<Task> ReturnAllTasks()
+        public List<Worktask> ReturnAllTasks()
         {
-            List<Task> tasks = new List<Task>();
+            List<Worktask> tasks = new List<Worktask>();
 
             List<TaskDTO> tasksDTO = _taskRepository.ReturnAllTasks();
 
             foreach (TaskDTO taskDTO in tasksDTO)
             {
-                Task entry = new Task(
+                Worktask entry = new Worktask(
                     taskDTO.Id,
                     taskDTO.Title,
                     taskDTO.Description,
@@ -40,9 +41,9 @@ namespace TakenbeheerCore.Task
             return tasks;
         }
 
-        public List<Subtask> GetSubtasks(int id)
+        public List<Subtask.Subtask> GetSubtasks(int id)
         {
-            List<Subtask> subtasks = new List<Subtask>();
+            List<Subtask.Subtask> subtasks = new List<Subtask.Subtask>();
 
             return subtasks;
         }

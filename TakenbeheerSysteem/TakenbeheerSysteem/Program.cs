@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 using TakenbeheerCore.Employee;
 using TakenbeheerCore.Task;
+using TakenbeheerCore.Team;
 using TakenbeheerDAL;
 
 namespace TakenbeheerSysteem
@@ -11,18 +12,29 @@ namespace TakenbeheerSysteem
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Logging.ClearProviders();
+            builder.Logging.AddConsole();
 
-            //IServiceCollection services = new ServiceCollection();
-
-            //Startup startup = new Startup();
-            //startup.ConfigureServices(services);
-
-            //IServiceProvider serviceProvider = services.BuildServiceProvider();
+            
 
             // Add services to the container.
             builder.Services.AddRazorPages();
-            builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+            //More extensive injection allowing for passing other interfaces along and other services like logger.
+            builder.Services.AddScoped<ITaskRepository>(sp =>
+            {
+                //The following line will allow me to use subtask repo in task repo
+                //var subtaskRepository = sp.GetRequiredService<ISubtaskRepository>();
+                var logger = sp.GetRequiredService<ILogger<TaskRepository>>();
+                return new TaskRepository(logger);
+            });
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddScoped<ITeamRepository, TeamRepository>();
+            //builder.Services.AddScoped<ISubtaskRepository, SubtaskRepository>();
+
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+            });
 
             var app = builder.Build();
 
@@ -36,11 +48,9 @@ namespace TakenbeheerSysteem
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.MapRazorPages();
 
             app.Run();

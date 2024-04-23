@@ -6,17 +6,17 @@ using System.Linq;
 using System.Text;
 using TakenbeheerCore.Task;
 using System.Threading.Tasks;
-using TakenbeheerDAL.Task;
+using Microsoft.Extensions.Logging;
 
 namespace TakenbeheerDAL
 {
     public class TaskRepository : ITaskRepository
     {
         private readonly DbConn _conn = new DbConn();
-
-        public TaskRepository()
+        private readonly ILogger _logger;
+        public TaskRepository(ILogger logger)
         {
-
+            _logger = logger;
         }
 
         //test functionality, won't be used in real app
@@ -25,7 +25,7 @@ namespace TakenbeheerDAL
             _conn.ConnString.Open();
 
             SqlCommand command = _conn.ConnString.CreateCommand();
-            command.CommandText = "SELECT * FROM Task";
+            command.CommandText = "SELECT * FROM Worktask";
 
             SqlDataReader reader = command.ExecuteReader();
 
@@ -42,6 +42,7 @@ namespace TakenbeheerDAL
                     DateOnly.FromDateTime(Convert.ToDateTime(dt.Rows[i]["Deadline"])),
                     Convert.ToBoolean(dt.Rows[i]["IsVisible"]));
                 result.Add(task);
+                _logger.LogInformation("Succesfully added task to list.");
             }
 
             _conn.ConnString.Close();

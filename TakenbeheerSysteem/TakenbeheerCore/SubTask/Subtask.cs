@@ -4,10 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TakenbeheerCore.SubTask
+namespace TakenbeheerCore.Subtask
 {
     public class Subtask
     {
 
+
+
+
+
+
+        public Subtask(SubtaskDTO subtaskDTO)
+        {
+
+        }
     }
 }

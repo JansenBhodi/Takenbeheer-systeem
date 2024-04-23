@@ -1,4 +1,52 @@
 ﻿@page
 @model TakenbeheerSysteem.Pages.Employee.IndexModel
 @{
+
+    <h1>@Model.Team.Name</h1>
+    <p>Team location: @Model.Team.Address - @Model.Team.PostalCode</p>
+    <h2>Employees</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Current task amount
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var worker in Model.Workers)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => worker.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => worker.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => worker.Tasks.Count)
+                    </td>
+                    <td>
+                        <form method="post">
+                            <input hidden value="@worker.Id" name="employeeId" />
+                            <button type="submit">View</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <form method="post">
+        <input hidden value="0" name="employeeId" />
+        <input type="submit" value="Create"/>
+    </form>
+    <br />
+
 }

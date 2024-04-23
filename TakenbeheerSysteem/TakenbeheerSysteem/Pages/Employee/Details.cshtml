@@ -1,4 +1,61 @@
 ﻿@page
 @model TakenbeheerSysteem.Pages.Employee.DetailsModel
 @{
+
+    <div>
+         <h1>
+            Name:
+        </h1>
+        <a>
+            @Model.employee.Name
+        </a>
+        <h2>
+            Role:
+        </h2>
+        <a>
+            @Model.employee.Role
+        </a>
+        <h2>
+            Email:
+        </h2>
+        <a>
+            @Model.employee.Email
+        </a>
+        <h2>
+            Location:
+        </h2>
+        <a>
+            @Model.employee.Address - @Model.employee.PostalCode
+        </a>
+    </div>
+    <div>
+        <table>
+            <tr>
+                <th>
+                    Task name:
+                </th>
+                <th>
+                    State:
+                </th>
+            </tr>
+            @foreach(var task in Model.employee.Tasks)
+            {
+                <tr>
+                    <td>
+                        @task.Title
+                    </td>
+                    <td>
+                        @task.Progress
+                    </td>
+                </tr>
+            }
+        </table>
+        <form>
+        </form>
+    </div>
+    <div>
+        <form>
+        </form>
+    </div>
+
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TakenbeheerDAL
 {
-    internal class SubtaskRepository
+    public class SubtaskRepository
     {
     }
 }
