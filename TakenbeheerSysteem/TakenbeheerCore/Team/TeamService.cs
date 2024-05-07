@@ -14,17 +14,17 @@ namespace TakenbeheerCore.Team
             _teamRepository = repo;
         }
 
-        public Team? GetTeamForEmployee(int employeeId)
+        public TeamModel? GetTeamForEmployee(int employeeId)
         {
             if (employeeId == 0)
             {
                 return null;
             }
-            Team result = null;
+            TeamModel result = null;
             try
             {
                 TeamDTO input = _teamRepository.GetTeamByEmployeeId(employeeId);
-                result = new Team(
+                result = new TeamModel(
                     input.Id, 
                     input.Name,
                     input.Address,

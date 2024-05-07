@@ -48,7 +48,7 @@ namespace TakenbeheerCore.Team
         }
 
         //When updating team to database
-        public TeamDTO(Team team)
+        public TeamDTO(TeamModel team)
         {
             Id = team.Id;
             Name = team.Name;

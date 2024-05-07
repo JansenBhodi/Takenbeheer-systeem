@@ -104,10 +104,14 @@ namespace TakenbeheerDAL
 
             SqlCommand command = _conn.ConnString.CreateCommand();
             command.CommandText = "UPDATE Employee " +
-                                  "SET Name = @employeename " +
-                                  "WHERE ID = @employeeid";
-            command.Parameters.AddWithValue("@employeeid", employee.Id);
-            command.Parameters.AddWithValue("@employeename", employee.Name);
+                                  "SET Name = @name, Role = @role, Email = @email, Address = @address, PostalCode = @postalcode " +
+                                  "WHERE ID = @id";
+            command.Parameters.AddWithValue("@id", employee.Id);
+            command.Parameters.AddWithValue("@name", employee.Name);
+            command.Parameters.AddWithValue("@role", employee.Role);
+            command.Parameters.AddWithValue("@address", employee.Address);
+            command.Parameters.AddWithValue("@email", employee.Email);
+            command.Parameters.AddWithValue("@postalcode", employee.PostalCode);
             try
             {
                 command.ExecuteNonQuery();

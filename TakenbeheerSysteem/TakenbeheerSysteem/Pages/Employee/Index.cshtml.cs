@@ -13,7 +13,7 @@ namespace TakenbeheerSysteem.Pages.Employee
         private EmployeeService _employeeService;
         private TeamService _teamService;
         public List<WorkerEmployee> Workers;
-        public Team Team;
+        public TeamModel Team;
 
         public IndexModel([FromServices] ITeamRepository teamRepo)
         {

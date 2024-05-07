@@ -72,6 +72,7 @@ namespace TakenbeheerCore.Employee
             else
             {
                 Role = "Worker";
+                TeamId = employee.TeamId;
             }
             Name = employee.Name;
             Email = employee.Email;

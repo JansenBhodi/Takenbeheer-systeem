@@ -7,7 +7,7 @@ using TakenbeheerCore.Employee;
 
 namespace TakenbeheerCore.Team
 {
-    public class Team
+    public class TeamModel
     {
         private int _id;
         public int Id { get { return _id; } }
@@ -24,7 +24,7 @@ namespace TakenbeheerCore.Team
         private List<WorkerEmployee>? _employees;
         public List<WorkerEmployee>? Employees { get { return _employees; } }
 
-        public Team(TeamDTO team)
+        public TeamModel(TeamDTO team)
         {
             _id = team.Id;
             _name = team.Name;
@@ -41,7 +41,7 @@ namespace TakenbeheerCore.Team
 
 
         //Overview employee page
-        public Team(int id, string name, string address, string postalCode)
+        public TeamModel(int id, string name, string address, string postalCode)
         {
             _id = id;
             _name = name;

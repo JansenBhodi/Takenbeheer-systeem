@@ -67,8 +67,18 @@ namespace TakenbeheerCore.Employee
             _password = password;
             _address = address;
             _postalCode = postalCode;
+        }
 
-
+        //updating employee in team
+        public WorkerEmployee(int id, string role, string name, string email, string password, string address, string postalCode)
+        {
+            _id = id;
+            _role = role;
+            _name = name;
+            _email = email;
+            _password = password;
+            _address = address;
+            _postalCode = postalCode;
         }
     }
 }
