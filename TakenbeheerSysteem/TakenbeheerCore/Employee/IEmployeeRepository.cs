@@ -13,5 +13,6 @@ namespace TakenbeheerCore.Employee
         public bool UpdateEmployee(WorkerEmployeeDTO employee);
         public bool CreateEmployee(WorkerEmployeeDTO employee);
         public bool DeleteEmployee(int employeeId);
+        public bool DecoupleTasksByEmployeeId(int employeeId);
     }
 }

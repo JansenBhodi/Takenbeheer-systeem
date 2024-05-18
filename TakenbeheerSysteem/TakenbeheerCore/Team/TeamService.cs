@@ -20,24 +20,57 @@ namespace TakenbeheerCore.Team
             {
                 return null;
             }
-            TeamModel result = null;
+            TeamModel result;
             try
             {
                 TeamDTO input = _teamRepository.GetTeamByEmployeeId(employeeId);
-                result = new TeamModel(
-                    input.Id, 
-                    input.Name,
-                    input.Address,
-                    input.PostalCode);
+                result = new TeamModel(input);
             }
             catch (Exception)
             {
-
                 return null;
             }
 
-
             return result;
+        }
+
+        public bool DeleteTeam(int teamId)
+        {
+            try
+            {
+                _teamRepository.DeleteTeamById(teamId);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool UpdateTeam(TeamModel inputData)
+        {
+            try
+            {
+                _teamRepository.EditTeamById(new TeamDTO(inputData));
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool CreateTeam(TeamModel inputData, int employeeId)
+        {
+            try
+            {
+                _teamRepository.CreateTeam(new TeamDTO(inputData), employeeId);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
     }

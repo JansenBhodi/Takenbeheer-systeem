@@ -71,6 +71,18 @@ namespace TakenbeheerCore.Employee
             }
         }
 
+        public bool DecoupleTasksForEmployee(int employeeId)
+        {
+            try
+            {
+                return _employeeRepo.DecoupleTasksByEmployeeId(employeeId);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public bool CreateEmployee(WorkerEmployee employee)
         {
             WorkerEmployeeDTO employeeDTO = new WorkerEmployeeDTO(employee);

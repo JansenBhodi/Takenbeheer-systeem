@@ -174,5 +174,30 @@ namespace TakenbeheerDAL
                 return false;
             }
         }
+
+        public bool DecoupleTasksByEmployeeId(int employeeId)
+        {
+            _conn.ConnString.Open();
+
+            SqlCommand cmd = _conn.ConnString.CreateCommand();
+            cmd.CommandText = "DELETE FROM EmployeeTaskConnector " +
+                              "WHERE EmployeeId = @id";
+            cmd.Parameters.AddWithValue("@id", employeeId);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                _conn.ConnString.Close();
+                return false;
+            }
+            finally
+            {
+                _conn.ConnString.Close();
+            }
+            return true;
+        }
     }
 }

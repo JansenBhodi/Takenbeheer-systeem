@@ -39,14 +39,13 @@ namespace TakenbeheerCore.Team
             }
         }
 
-
-        //Overview employee page
-        public TeamModel(int id, string name, string address, string postalCode)
+        //Create and Edit
+        public TeamModel(int id, string name, string address, string postalcode) 
         {
             _id = id;
             _name = name;
             _address = address;
-            _postalCode = postalCode;
+            _postalCode = postalcode;
         }
     }
 }

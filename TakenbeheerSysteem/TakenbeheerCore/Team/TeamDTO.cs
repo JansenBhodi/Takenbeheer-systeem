@@ -15,19 +15,6 @@ namespace TakenbeheerCore.Team
         public string PostalCode { get; set; }
         public List<WorkerEmployeeDTO>? Employees { get; set; }
 
-        //Overview team page
-        public TeamDTO(int id, string name, string address, string postalCode, List<WorkerEmployeeDTO>? employees)
-        {
-            Id = id;
-            Name = name;
-            Address = address;
-            PostalCode = postalCode;
-            if (employees != null)
-            {
-                Employees = employees;
-            }
-        }
-
         //Overview employee page
         public TeamDTO(int id, string name, string address, string postalCode)
         {
@@ -37,19 +24,10 @@ namespace TakenbeheerCore.Team
             PostalCode = postalCode;
         }
 
-        //Used in creating new team
-        public TeamDTO(int id, string name, string address, string postalCode, WorkerEmployeeDTO manager)
-        {
-            Id = id;
-            Name = name;
-            Address = address;
-            PostalCode = postalCode;
-            Employees.Add(manager);
-        }
-
         //When updating team to database
         public TeamDTO(TeamModel team)
         {
+
             Id = team.Id;
             Name = team.Name;
             Address = team.Address;

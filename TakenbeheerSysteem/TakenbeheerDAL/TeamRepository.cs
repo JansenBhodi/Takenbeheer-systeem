@@ -54,5 +54,98 @@ namespace TakenbeheerDAL
 
             return result;
         }
+
+        public bool EditTeamById(TeamDTO inputData)
+        {
+            _conn.ConnString.Open();
+            SqlCommand cmd = _conn.ConnString.CreateCommand();
+            cmd.CommandText = "UPDATE Team " +
+                              "SET Name = @name, Address = @address, PostalCode = @postalcode " +
+                              "WHERE Id = @id";
+            cmd.Parameters.AddWithValue("@name", inputData.Name);
+            cmd.Parameters.AddWithValue("@address", inputData.Address);
+            cmd.Parameters.AddWithValue("@postalcode", inputData.PostalCode);
+            cmd.Parameters.AddWithValue("@id", inputData.Id);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                _conn.ConnString.Close();
+                return false;
+                
+            }
+            finally
+            {
+                _conn.ConnString.Close();
+            }
+            return true;
+        }
+
+        public bool DeleteTeamById(int teamId) 
+        {
+            _conn.ConnString.Open();
+            SqlCommand cmd = _conn.ConnString.CreateCommand();
+            cmd.CommandText = "DELETE FROM Team " +
+                              "WHERE Id = @id";
+            cmd.Parameters.AddWithValue("@id", teamId);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                _conn.ConnString.Close();
+                return false;
+            }
+            finally 
+            { 
+                _conn.ConnString.Close();
+            }
+            return true;
+        }
+
+        public bool CreateTeam(TeamDTO inputData, int employeeId)
+        {
+            _conn.ConnString.Open();
+            SqlCommand cmd = _conn.ConnString.CreateCommand();
+            cmd.CommandText = "INSERT INTO Team " +
+                              "(Name, Address, PostalCode) " +
+                              "VALUES (@name, @address, @postalcode)";
+            cmd.Parameters.AddWithValue("@name", inputData.Name);
+            cmd.Parameters.AddWithValue("@address", inputData.Address);
+            cmd.Parameters.AddWithValue("@postalcode", inputData.PostalCode);
+
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                _conn.ConnString.Close();
+                return false;
+            }
+
+            cmd.CommandText = "UPDATE Employee e " +
+                              "SET e.TeamId = (SELECT t.Id FROM Team t WHERE t.Name = @name) " +
+                              "WHERE e.Id = @id";
+            cmd.Parameters.AddWithValue("@id", employeeId);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                _conn.ConnString.Close();
+                return false;
+            }
+
+            return true;
+        }
     }
 }
