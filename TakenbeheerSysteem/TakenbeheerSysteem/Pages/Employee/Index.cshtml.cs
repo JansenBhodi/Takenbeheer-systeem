@@ -15,6 +15,7 @@ namespace TakenbeheerSysteem.Pages.Employee
         public List<WorkerEmployee> Workers;
         public TeamModel Team;
 
+
         public IndexModel([FromServices] ITeamRepository teamRepo)
         {
             _employeeService = new EmployeeService(new EmployeeRepository());
@@ -27,25 +28,40 @@ namespace TakenbeheerSysteem.Pages.Employee
             Workers = _employeeService.GetEmployees(Team.Id);
         }
 
-        public ActionResult OnPost(int employeeId = 0)
+        public ActionResult OnPost(string submit, int employeeId = 0)
         {
             try
             {
-                employeeId = int.Parse(Request.Form["employeeId"]);
+                submit = Request.Form["submit"];
             }
             catch
             {
+                return Redirect("Employee/Index");
+            }
+            switch (submit)
+            {
+                case "View":
+                    employeeId = int.Parse(Request.Form["employeeId"]);
+                    HttpContext.Session.SetInt32("employeeId", employeeId);
+                    return Redirect("Employee/Details");
+                    break;
+                case "Delete":
+                    employeeId = int.Parse(Request.Form["employeeId"]);
+                    HttpContext.Session.SetInt32("deleteTarget", employeeId);
+                    return Redirect("Employee/Delete");
+                    break;
+                case "Create":
+                    return Redirect("Employee/Create");
+                    break;
+                case "Team Details":
+                    return Redirect("~/Team/Details");
+                    break;
+                default:
+                    return Redirect("Employee/Index");
+                    break;
+            }
 
-            }
-            if (employeeId != 0)
-            {
-                HttpContext.Session.SetInt32("employeeId", employeeId);
-                return Redirect("Employee/Details");
-            }
-            else
-            {
-                return Redirect("Employee/Create");
-            }
+            return Redirect("Employee/Index");
         }
     }
 }

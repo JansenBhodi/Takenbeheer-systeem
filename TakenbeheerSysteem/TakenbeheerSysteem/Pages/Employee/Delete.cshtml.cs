@@ -7,28 +7,35 @@ namespace TakenbeheerSysteem.Pages.Employee
     public class DeleteModel : PageModel
     {
         public EmployeeService service;
-        public int target;
         public void OnGet()
-        {
-        }
+		{
+
+		}
 
         public DeleteModel(IEmployeeRepository irepo) 
         {
             service = new EmployeeService(irepo);
-            target = HttpContext.Session.GetInt32("deleteTarget") ?? 0;
         }
 
         public ActionResult OnPost()
         {
-            try
-            {
-                service.DeleteEmployee(target);
-            }
-            finally
-            {
-
-            }
-            return Redirect("Employee/Index");
+            if (Request.Form["submit"] == "Delete")
+			{
+				try
+				{
+                    
+					service.DeleteEmployee(HttpContext.Session.GetInt32("deleteTarget") ?? default(int));
+				}
+                catch(Exception)
+                {
+					//Log what exactly went wrong and show custom error page
+				}
+				return Redirect("Index");
+			}
+            else
+			{
+				return Redirect("Index");
+			}
         }
     }
 }

@@ -6,6 +6,10 @@
     <p>Team location: @Model.Team.Address - @Model.Team.PostalCode</p>
     <h2>Employees</h2>
 
+    <form method="post">
+        <input type="submit" name="submit" value="Team Details" />
+    </form>
+
     <table>
         <thead>
             <tr>
@@ -36,7 +40,13 @@
                     <td>
                         <form method="post">
                             <input hidden value="@worker.Id" name="employeeId" />
-                            <button type="submit">View</button>
+                            <input type="submit" name="submit" value="View" />
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post">
+                            <input hidden value="@worker.Id" name="employeeId" />
+                            <input type="submit" name="submit" value="Delete" />
                         </form>
                     </td>
                 </tr>
@@ -44,8 +54,7 @@
         </tbody>
     </table>
     <form method="post">
-        <input hidden value="0" name="employeeId" />
-        <input type="submit" value="Create"/>
+        <input type="submit" name="submit" value="Create"/>
     </form>
     <br />
 

@@ -50,16 +50,20 @@ namespace TakenbeheerCore.Task
             _progress = (ProgressState)taskDto.Progress;
             _deadline = (DateOnly)taskDto.Deadline;
             _isVisible = taskDto.IsVisible;
-            foreach(SubtaskDTO subtask in taskDto.Subtasks)
-            {
-                _subtasks.Add(new Subtask.Subtask(subtask));
-            }
-
-            foreach (WorkerEmployeeDTO employee in taskDto.Employees)
-            {
-                _employees.Add(new WorkerEmployee(employee));
-            }
+            if(taskDto.Subtasks != null)
+			{
+				foreach (SubtaskDTO subtask in taskDto.Subtasks)
+				{
+					_subtasks.Add(new Subtask.Subtask(subtask));
+				}
+			}
+            if(taskDto.Employees != null)
+			{
+				foreach (WorkerEmployeeDTO employee in taskDto.Employees)
+				{
+					_employees.Add(new WorkerEmployee(employee));
+				}
+			}
         }
-
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using TakenbeheerCore.Employee;
@@ -48,11 +49,26 @@ namespace TakenbeheerCore.Task
             return subtasks;
         }
 
-        public List<WorkerEmployee> GetWorkers(int id)
+        public List<Worktask> GetTasksByEmployee(int empId)
         {
-            List<WorkerEmployee> workers = new List<WorkerEmployee>();
+            List<Worktask> result = new List<Worktask>();
 
-            return workers;
+            try
+            {
+                List<TaskDTO> input = _taskRepository.GetTasksByEmployee(empId);
+                foreach (TaskDTO item in input)
+                {
+                    result.Add(new Worktask(item));
+                }
+            }
+            catch (Exception)
+            {
+
+                return result;
+            }
+
+
+            return result;
         }
 
 

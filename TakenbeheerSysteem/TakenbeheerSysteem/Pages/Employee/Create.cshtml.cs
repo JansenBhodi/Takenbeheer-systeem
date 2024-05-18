@@ -11,16 +11,20 @@ namespace TakenbeheerSysteem.Pages.Employee
         private EmployeeService _employeeService;
         private TeamService _teamService;
 
-        public void OnGet([FromServices] IEmployeeRepository employeeRepo, [FromServices] ITeamRepository teamRepo)
+        public CreateModel([FromServices] IEmployeeRepository employeeRepo, [FromServices] ITeamRepository teamRepo)
+		{
+			_employeeService = new EmployeeService(employeeRepo);
+			_teamService = new TeamService(teamRepo);
+		}
+
+        public void OnGet()
         {
-            _employeeService = new EmployeeService(employeeRepo);
-            _teamService = new TeamService(teamRepo);
         }
 
         public ActionResult OnPost()
         {
-            Team team = _teamService.GetTeamForEmployee(HttpContext.Session.GetInt32("uId") ?? 0);
-            WorkerEmployee employee = new WorkerEmployee(
+            TeamModel team = _teamService.GetTeamForEmployee(HttpContext.Session.GetInt32("uId") ?? default(int));
+			WorkerEmployee employee = new WorkerEmployee(
                 team.Id,
                 Request.Form["Name"],
                 Request.Form["Email"],
@@ -30,11 +34,11 @@ namespace TakenbeheerSysteem.Pages.Employee
                 );
             if(_employeeService.CreateEmployee(employee))
             {
-                return Redirect("Employee/Index");
+                return Redirect("Index");
             }
             else
             {
-                return Redirect("Employee/Create");
+                return Redirect("Create");
             }
         }
     }

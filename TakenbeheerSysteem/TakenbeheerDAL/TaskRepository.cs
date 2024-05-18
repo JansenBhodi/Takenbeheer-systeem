@@ -48,5 +48,27 @@ namespace TakenbeheerDAL
             _conn.ConnString.Close();
             return result;
         }
+
+        public List<TaskDTO> GetTasksByEmployee(int empId)
+        {
+            List<TaskDTO> result = new List<TaskDTO>();
+            _conn.ConnString.Open();
+
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+				_conn.ConnString.Close();
+				return result;
+            }
+            finally
+            {
+                _conn.ConnString.Close();
+            }
+
+            return result;
+        }
     }
 }
