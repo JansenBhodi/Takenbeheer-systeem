@@ -1,4 +1,22 @@
 ﻿@page
 @model TakenbeheerSysteem.Pages.Team.EditModel
 @{
+
+    <div>
+        <h1>
+            Edit team
+        </h1>
+        <form method="post">
+            <div>
+                <h2>Name:</h2>
+                <input type="text" name="Name" value="@Model.input.Name" required />
+                <h2>Address:</h2>
+                <input type="text" name="Address" value="@Model.input.Address" required />
+                <h2>Postal Code:</h2>
+                <input type="text" name="PostalCode" value="@Model.input.PostalCode" required />
+                <input class="text-yellow" type="submit" name="Submit" value="Update" />
+                <input class="text-yellow" type="submit" name="Submit" value="Cancel" />
+            </div>
+        </form>
+    </div>
 }
