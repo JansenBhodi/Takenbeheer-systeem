@@ -13,7 +13,13 @@
                 <h2>Name:</h2>
                 <input type="text" name="Name" value="@Model.Input.Name" required />
                 <h2>Role:</h2>
-                <input type="text" name="Role" value="@Model.Input.Role" required />
+                <div>
+                    <input id="RoleWorker" type="radio" name="Role" value="2" required />
+                    <label for="RoleWorker">Worker</label>
+
+                    <input id="RoleTeamLead" type="radio" name="Role" value="3" required />
+                    <label for="RoleTeamLead">Teamlead</label>
+                </div>
                 <h2>Address:</h2>
                 <input type="text" name="Address" value="@Model.Input.Address" required />
                 <h2>PostalCode:</h2>

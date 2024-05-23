@@ -12,7 +12,7 @@ namespace TakenbeheerCore.Employee
         #region parameters
         public int Id { get; set; }
         public int TeamId { get; set; }
-        public string Role { get; set; }
+        public int Role { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
@@ -24,7 +24,7 @@ namespace TakenbeheerCore.Employee
         #endregion
 
         //Employee data for detail page
-        public WorkerEmployeeDTO(int id, int teamId, string role, string name, string email, string address, string postalCode)
+        public WorkerEmployeeDTO(int id, int teamId, int role, string name, string email, string address, string postalCode)
         {
             Id = id; 
             TeamId = teamId; 
@@ -35,15 +35,21 @@ namespace TakenbeheerCore.Employee
             PostalCode = postalCode; 
         }
 
-        //Login check
-        public WorkerEmployeeDTO(string email, string password)
+        //Login output
+        public WorkerEmployeeDTO(int id, int role)
         {
-            Email = email;
-            Password = password;
+            Id = id;
+            Role = role;
+            Name = "";
+            Email = "";
+            Password = "";
+            Address = "";
+            PostalCode = "";
+
         }
 
         //Employee data for task detail
-        public WorkerEmployeeDTO(int id, int teamId, string role, string name)
+        public WorkerEmployeeDTO(int id, int teamId, int role, string name)
         {
             Id = id;
             TeamId = teamId;
@@ -52,7 +58,7 @@ namespace TakenbeheerCore.Employee
         }
 
         //Employee for team detail
-        public WorkerEmployeeDTO(int id, int teamid, string role, string name, string email)
+        public WorkerEmployeeDTO(int id, int teamid, int role, string name, string email)
         {
             Id = id;
             TeamId = teamid;
@@ -67,11 +73,11 @@ namespace TakenbeheerCore.Employee
             if (employee.Id != 0)
             {
                 Id = employee.Id;
-                Role = employee.Role;
+                Role = (int)employee.Role;
             }
             else
             {
-                Role = "Worker";
+                Role = 2;
                 TeamId = employee.TeamId;
             }
             Name = employee.Name;

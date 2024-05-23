@@ -37,28 +37,15 @@
                     <td>
                         @Html.DisplayFor(modelItem => task.Deadline)
                     </td>
+                    <td>
+                        <form>
+                            <input type="text" hidden name="Checker" value="@task.Id" />
+                            <input type="submit" name="Submit" value="View" />
+                        </form>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
     <br/>
-    <h2>
-        Subtasks
-    </h2>
-    <table>
-        <thead>
-        <tr>
-            <th>
-                Title
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-            @foreach (var task in Model.taskList)
-            {
-                
-            }
-        </tbody>
-    </table>
-
 }

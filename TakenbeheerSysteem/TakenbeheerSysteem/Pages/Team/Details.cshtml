@@ -1,5 +1,19 @@
 ﻿@page
 @model TakenbeheerSysteem.Pages.Team.DetailsModel
 @{
+    <div>
+        <h1>@Model.team.Name</h1>
 
+        <h3>Team Address:</h3>
+        <p>@Model.team.Address - @Model.team.PostalCode</p>
+    </div>
+    <div>
+        <form method="post">
+            <input type="submit" name="Submit" value="Edit" />
+        </form>
+        <p></p>
+        <form method="post">
+            <input type="submit" name="Submit" value="Delete" />
+        </form>
+    </div>
 }

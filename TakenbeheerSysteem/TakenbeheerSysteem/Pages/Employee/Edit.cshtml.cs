@@ -24,7 +24,7 @@ namespace TakenbeheerSysteem.Pages.Employee
         {
             WorkerEmployee employee = new WorkerEmployee(
                 int.Parse(Request.Form["Id"]),
-                Request.Form["Role"],
+                int.Parse(Request.Form["Role"]),
                 Request.Form["Name"],
                 Request.Form["Email"],
                 Request.Form["Password"],

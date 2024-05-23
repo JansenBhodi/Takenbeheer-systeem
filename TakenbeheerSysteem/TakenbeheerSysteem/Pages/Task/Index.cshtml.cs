@@ -17,7 +17,18 @@ namespace TakenbeheerSysteem.Pages.Task
         }
         public void OnGet()
         {
-            taskList = taskService.ReturnAllTasks();
+            taskList = taskService.ReturnAllTasks(HttpContext.Session.GetInt32("uId") ?? default(int));
+        }
+
+        public ActionResult OnPost()
+        {
+            if (Request.Form["Submit"] == "View")
+            {
+                HttpContext.Session.SetInt32("taskId", int.Parse(Request.Form["Checker"]));
+                return Redirect("Details");
+            }
+
+            return Redirect("Index");
         }
     }
 }

@@ -28,5 +28,21 @@ namespace TakenbeheerSysteem.Pages.Employee
         }
 
 
+        public ActionResult OnPost()
+        {
+            switch (Request.Form["Submit"])
+            {
+                case "View":
+                    return Redirect("~/Task/Details");
+                    break;
+                case "Edit":
+                    return Redirect("Edit");
+                    break;
+                case "Add task":
+                    break;
+            }
+            return Redirect("Details");
+        }
+
     }
 }

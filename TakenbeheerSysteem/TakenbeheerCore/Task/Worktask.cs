@@ -9,6 +9,9 @@ namespace TakenbeheerCore.Task
         private int _id;
         public int Id { get { return _id; } }
 
+        private int _teamId;
+        public int TeamId { get { return _teamId; } }
+
         private string _title;
         public string Title { get { return _title; } }
 

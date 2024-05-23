@@ -1,13 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using TakenbeheerCore.Employee;
 
 namespace TakenbeheerSysteem.Pages.Login
 {
     public class LoginModel : PageModel
     {
+        private EmployeeService _service;
+
         public void OnGet()
         {
 
+        }
+
+        public LoginModel(IEmployeeRepository repo)
+        {
+            _service = new EmployeeService(repo);
         }
 
         public IActionResult OnPost()
@@ -18,10 +26,11 @@ namespace TakenbeheerSysteem.Pages.Login
 
             try
             {
-                int id = 1;
-                if (id != null)
+                WorkerEmployee emp = _service.AttemptLogin(email, password);
+                if (emp.Id != 0)
                 {
-                    HttpContext.Session.SetInt32("uId", id);
+                    HttpContext.Session.SetInt32("uId", emp.Id);
+                    HttpContext.Session.SetInt32("role", (int)emp.Role);
                     return Redirect("../Index");
                 }
             }

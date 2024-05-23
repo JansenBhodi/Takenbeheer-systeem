@@ -40,7 +40,7 @@ namespace TakenbeheerDAL
                         WorkerEmployeeDTO entry = new WorkerEmployeeDTO(
                             reader.GetInt32("Id"),
                             reader.GetInt32("TeamID"),
-                            reader.GetString("Role"),
+                            reader.GetInt32("Role"),
                             reader.GetString("Name"),
                             reader.GetString("Email"));
                         result.Add(entry);
@@ -79,7 +79,7 @@ namespace TakenbeheerDAL
                         result = new WorkerEmployeeDTO(
                             employeeReader.GetInt32("Id"),
                             employeeReader.GetInt32("TeamID"),
-                            employeeReader.GetString("Role"),
+                            employeeReader.GetInt32("Role"),
                             employeeReader.GetString("Name"),
                             employeeReader.GetString("Email"),
                             employeeReader.GetString("Address"),
@@ -198,6 +198,43 @@ namespace TakenbeheerDAL
                 _conn.ConnString.Close();
             }
             return true;
+        }
+
+        public WorkerEmployeeDTO? ValidateLogin(string email, string password)
+        {
+            WorkerEmployeeDTO result = null;
+
+            using (SqlCommand cmd = _conn.ConnString.CreateCommand())
+            {
+                _conn.ConnString.Open();
+                cmd.CommandText = "SELECT Id, Email, Role FROM Employee " +
+                                  "WHERE Email = @email AND Password = @password";
+                cmd.Parameters.AddWithValue("@email", email);
+                cmd.Parameters.AddWithValue("@password", password);
+
+                try
+                {
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while(reader.Read())
+                        {
+                            if(email == reader.GetString("Email"))
+                            {
+                                result = new WorkerEmployeeDTO(
+                                    reader.GetInt32("Id"),
+                                    reader.GetInt32("Role"));
+                            }
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    _conn.ConnString.Close();
+                    return null;
+                }
+            }
+            _conn.ConnString.Close();
+            return result;
         }
     }
 }

@@ -17,8 +17,8 @@ namespace TakenbeheerCore.Employee
         private int _teamId;
         public int TeamId { get { return _teamId; } }
 
-        private string _role;
-        public string Role { get { return _role; } }
+        private WorkRole _role;
+        public WorkRole Role { get { return _role; } }
 
         private string _name;
         public string Name { get { return _name; } }
@@ -70,10 +70,10 @@ namespace TakenbeheerCore.Employee
         }
 
         //updating employee in team
-        public WorkerEmployee(int id, string role, string name, string email, string password, string address, string postalCode)
+        public WorkerEmployee(int id, int role, string name, string email, string password, string address, string postalCode)
         {
             _id = id;
-            _role = role;
+            _role = (WorkRole)role;
             _name = name;
             _email = email;
             _password = password;

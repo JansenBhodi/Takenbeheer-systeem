@@ -20,6 +20,7 @@ namespace TakenbeheerDAL
 
         public TeamDTO? GetTeamByEmployeeId(int employeeId)
         {
+
             _conn.ConnString.Open();
             TeamDTO result = null;
             SqlCommand cmd = _conn.ConnString.CreateCommand();

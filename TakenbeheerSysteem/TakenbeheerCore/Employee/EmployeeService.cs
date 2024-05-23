@@ -96,5 +96,18 @@ namespace TakenbeheerCore.Employee
                 return false;
             }
         }
+
+        public WorkerEmployee? AttemptLogin(string email, string password)
+        {
+            try
+            {
+                return new WorkerEmployee(_employeeRepo.ValidateLogin(email, password));
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
     }
 }

@@ -28,13 +28,25 @@
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Employee/Index">Employees</a>
                             </li>
                         }
+                        @if (Context.Session.GetInt32("uId") != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Team/Details">Team</a>
+                            </li>
+                        }
+                        @if (Context.Session.GetInt32("uId") != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Task/Index">Task</a>
+                            </li>
+                        }
                         @if(Context.Session.GetInt32("uId") == null)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Login/Login">Login</a>
                             </li>
                         }
-                        @if (Context.Session.GetInt32("uId") != null)
+                        @if (Context.Session.GetInt32("uId") != null && Context.Session.GetInt32("Role") > 1)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Team/Create">Start a new team</a>

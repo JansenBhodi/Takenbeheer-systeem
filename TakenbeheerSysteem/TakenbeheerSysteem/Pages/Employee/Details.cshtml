@@ -38,7 +38,11 @@
                     State:
                 </th>
             </tr>
-            @foreach(var task in Model.employee.Tasks)
+            @if(Model.Tasks.Count > 0)
+            {
+                
+            }
+            @foreach(var task in Model.Tasks)
             {
                 <tr>
                     <td>
@@ -47,16 +51,25 @@
                     <td>
                         @task.Progress
                     </td>
+                    <td>
+                        <form method="post">
+                            <input type="text" hidden name="Input" value="@task.Id"/>
+                            <input type="submit" name="Submit" value="View" />
+                        </form>
+                    </td>
                 </tr>
             }
         </table>
-        <form method="post">
-            <input type="button" />
-        </form>
+        <div>
+            <form method="post">
+                <input type="text" hidden name="Input" value="@Model.employee.Id" />
+                <input type="submit" name="Submit" value="Add task" />
+            </form>
+        </div>
     </div>
-    <div>
-        <form>
-        </form>
-    </div>
+    <form method="post">
+        <input type="text" hidden name="Input" value="@Model.employee.Id" />
+        <input type="submit" name="Submit" value="Edit" />
+    </form>
 
 }

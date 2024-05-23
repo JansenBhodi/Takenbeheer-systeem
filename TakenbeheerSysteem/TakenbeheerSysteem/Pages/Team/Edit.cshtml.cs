@@ -26,7 +26,7 @@ namespace TakenbeheerSysteem.Pages.Team
             if (Request.Form["Submit"] == "Update")
             {
                 TeamModel result = new TeamModel(
-                    input.Id,
+                    int.Parse(Request.Form["Checker"]),
                     Request.Form["Name"],
                     Request.Form["Address"],
                     Request.Form["PostalCode"]

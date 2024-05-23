@@ -20,11 +20,11 @@ namespace TakenbeheerCore.Task
             _taskRepository = repo;
         }
 
-        public List<Worktask> ReturnAllTasks()
+        public List<Worktask> ReturnAllTasks(int empId)
         {
             List<Worktask> tasks = new List<Worktask>();
 
-            List<TaskDTO> tasksDTO = _taskRepository.ReturnAllTasks();
+            List<TaskDTO> tasksDTO = _taskRepository.ReturnAllTasks(empId);
 
             foreach (TaskDTO taskDTO in tasksDTO)
             {

@@ -11,6 +11,7 @@ namespace TakenbeheerCore.Task
     public class TaskDTO
     {
         public int Id { get; set; }
+        public int TeamId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public int Progress { get; set; }
@@ -19,7 +20,7 @@ namespace TakenbeheerCore.Task
         public List<SubtaskDTO>? Subtasks { get; set; }
         public List<WorkerEmployeeDTO>? Employees { get; set; }
 
-        //Detail page Task
+        //Detail page Task/Employee
         public TaskDTO(int id, string title, string desc, int progress, DateOnly date, bool isVisible)
         {
             Id = id;
@@ -28,14 +29,8 @@ namespace TakenbeheerCore.Task
             Progress = progress;
             Deadline = date;
             IsVisible = isVisible;
-        }
-
-        //detail page employee
-        public TaskDTO(int id, string title, DateOnly date)
-        {
-            Id = id;
-            Title = title;
-            Deadline = date;
+            Subtasks = null;
+            Employees = null;
         }
 
         //Create task
