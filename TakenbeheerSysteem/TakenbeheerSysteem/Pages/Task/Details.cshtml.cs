@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TakenbeheerCore.Employee;
 using TakenbeheerCore.Task;
+using TakenbeheerCore.Team;
 
 namespace TakenbeheerSysteem.Pages.Task
 {
@@ -10,10 +11,14 @@ namespace TakenbeheerSysteem.Pages.Task
         private EmployeeService _empService;
         private TaskService _taskService;
 
+        public List<WorkerEmployee> team;
+        public Worktask task;
+
         public void OnGet()
         {
-
-        }
+            team = _empService.GetEmployeesByTaskId(HttpContext.Session.GetInt32("taskId") ?? default(int));
+            task = _taskService.GetTaskById(HttpContext.Session.GetInt32("taskId") ?? default(int));
+		}
 
         public DetailsModel(IEmployeeRepository empRepo, ITaskRepository taskRepo)
         {
@@ -25,10 +30,16 @@ namespace TakenbeheerSysteem.Pages.Task
         {
             switch (Request.Form["Submit"])
             {
-                case "ViewEmployee":
+                case "View Employee":
                     HttpContext.Session.SetInt32("employeeId", int.Parse(Request.Form["Checker"]));
-                    return Redirect("~/Employee/Details");
-                case "ViewSubtask":
+					return Redirect("~/Employee/Details");
+				case "Edit":
+					HttpContext.Session.SetInt32("taskId", task.Id);
+					return Redirect("Edit");
+				case "Delete":
+					HttpContext.Session.SetInt32("taskId", task.Id);
+					return Redirect("Delete");
+				case "View Subtask":
                     HttpContext.Session.SetInt32("subtaskId", int.Parse(Request.Form["Checker"]));
                     return Redirect("Index");
                     break;

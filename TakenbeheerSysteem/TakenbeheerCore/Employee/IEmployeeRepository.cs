@@ -15,5 +15,6 @@ namespace TakenbeheerCore.Employee
         public bool DeleteEmployee(int employeeId);
         public bool DecoupleTasksByEmployeeId(int employeeId);
         public WorkerEmployeeDTO ValidateLogin(string email, string password);
+        public List<WorkerEmployeeDTO> GetEmployeesByTaskId(int taskId);
     }
 }

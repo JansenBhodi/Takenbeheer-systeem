@@ -29,6 +29,20 @@ namespace TakenbeheerCore.Employee
             return result;
         }
 
+        public List<WorkerEmployee> GetEmployeesByTaskId(int taskId)
+		{
+			List<WorkerEmployee> result = new List<WorkerEmployee>();
+
+			List<WorkerEmployeeDTO> dbEntries = _employeeRepo.GetEmployeesByTaskId(taskId);
+
+			foreach (WorkerEmployeeDTO dbEntry in dbEntries)
+			{
+				result.Add(new WorkerEmployee(dbEntry));
+			}
+
+			return result;
+		}
+
         public WorkerEmployee GetEmployee(int employeeId)
         {
             WorkerEmployee employee;

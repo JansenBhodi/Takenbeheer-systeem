@@ -20,7 +20,48 @@ namespace TakenbeheerDAL
 
         }
 
-        public List<WorkerEmployeeDTO> GetEmployees(int teamId)
+		public List<WorkerEmployeeDTO> GetEmployeesByTaskId(int taskId)
+		{
+			_conn.ConnString.Open();
+
+			SqlCommand command = _conn.ConnString.CreateCommand();
+			command.CommandText = "SELECT * FROM Employee e " +
+                                  "INNER JOIN TaskEmployeeConnector t ON e.Id = t.EmployeeId " +
+								  "WHERE e.TaskId = @taskid";
+			command.Parameters.AddWithValue("@taskid", taskId);
+
+			List<WorkerEmployeeDTO> result = new List<WorkerEmployeeDTO>();
+
+			try
+			{
+				using (SqlDataReader reader = command.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						WorkerEmployeeDTO entry = new WorkerEmployeeDTO(
+							reader.GetInt32("Id"),
+							reader.GetInt32("TeamID"),
+							reader.GetInt32("Role"),
+							reader.GetString("Name"),
+							reader.GetString("Email"));
+						result.Add(entry);
+					}
+				}
+			}
+			catch (Exception)
+			{
+				result = null;
+
+			}
+			finally
+			{
+				_conn.ConnString.Close();
+			}
+
+			return result;
+		}
+
+		public List<WorkerEmployeeDTO> GetEmployees(int teamId)
         {
             _conn.ConnString.Open();
 

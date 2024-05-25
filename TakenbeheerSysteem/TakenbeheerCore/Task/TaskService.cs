@@ -71,6 +71,16 @@ namespace TakenbeheerCore.Task
             return result;
         }
 
-
+        public Worktask? GetTaskById(int id)
+        {
+            try
+            {
+                return new Worktask(_taskRepository.GetTaskById(id));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }

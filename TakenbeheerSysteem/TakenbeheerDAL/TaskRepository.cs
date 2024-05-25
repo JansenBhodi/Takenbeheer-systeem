@@ -21,6 +21,52 @@ namespace TakenbeheerDAL
             _logger = logger;
         }
 
+        public TaskDTO? GetTaskById(int id)
+        {
+            TaskDTO result = null;
+            using(SqlCommand cmd = _conn.ConnString.CreateCommand())
+            {
+                try
+                {
+                    _conn.ConnString.Open();
+                }
+                catch (Exception)
+                {
+
+                    return null;
+                }
+
+                cmd.CommandText = "SELECT * FROM Task " +
+                                  "WHERE Id = @id";
+                cmd.Parameters.AddWithValue("@id", id);
+                try
+				{
+					using (SqlDataReader reader = cmd.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+							result = new TaskDTO(
+								reader.GetInt32("Id"),
+								reader.GetString("Title"),
+								reader.GetString("Description"),
+								reader.GetInt32("Progress"),
+								DateOnly.FromDateTime(reader.GetDateTime("Deadline")),
+								reader.GetBoolean("IsVisible"));
+						}
+					}
+				}
+                catch (Exception)
+                {
+                    _conn.ConnString.Close();
+                    return null;
+                }
+                finally
+                {
+                    _conn.ConnString.Close();
+                }
+                return result;
+            }
+        }
 
         public List<TaskDTO>? ReturnAllTasks(int empId)
         {

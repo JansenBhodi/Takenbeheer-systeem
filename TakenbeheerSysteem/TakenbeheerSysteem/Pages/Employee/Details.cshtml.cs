@@ -33,6 +33,7 @@ namespace TakenbeheerSysteem.Pages.Employee
             switch (Request.Form["Submit"])
             {
                 case "View":
+                    HttpContext.Session.SetInt32("taskId", int.Parse(Request.Form["Input"]));
                     return Redirect("~/Task/Details");
                     break;
                 case "Edit":
