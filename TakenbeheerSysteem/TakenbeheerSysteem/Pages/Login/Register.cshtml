@@ -13,9 +13,9 @@
                 <h2>Email:</h2>
                 <input type="email" name="Email" pattern="[a-z0-9._%+\-]+&#64;[a-z0-9.\-]+\.[a-z]{2,}$" required />
                 <h2>Password:</h2>
-                <input type="password" name="Password" pattern="^(?=.*\d.*\d)(?=.*[A-Z])(?=.*[&#64;#$%\^&+=]).{8,}$" required />
+                <input type="password" name="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required />
                 <br />
-                <a>Password has to exist out of at least one symbol, two separate numbers and at least 8 characters.</a>
+                <a>Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</a>
                 <br />
                 <input class="text-yellow" type="submit" value="Register" />
             </div>

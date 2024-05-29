@@ -111,17 +111,20 @@ namespace TakenbeheerCore.Employee
             }
         }
 
-        public WorkerEmployee? AttemptLogin(string email, string password)
+        public int[]? AttemptLogin(string email, string password)
         {
+            int[]? result = null;
             try
             {
-                return new WorkerEmployee(_employeeRepo.ValidateLogin(email, password));
+                result = _employeeRepo.ValidateLogin(email, password);
             }
             catch (Exception)
             {
 
                 return null;
             }
+
+            return result;
         }
     }
 }

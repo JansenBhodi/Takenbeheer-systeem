@@ -4,7 +4,7 @@ using TakenbeheerCore.Employee;
 
 namespace TakenbeheerSysteem.Pages.Login
 {
-    public class LoginModel : PageModel
+    public class LoginModelFailed : PageModel
     {
         private EmployeeService _service;
 
@@ -13,7 +13,7 @@ namespace TakenbeheerSysteem.Pages.Login
 
         }
 
-        public LoginModel(IEmployeeRepository repo)
+        public LoginModelFailed(IEmployeeRepository repo)
         {
             _service = new EmployeeService(repo);
         }

@@ -17,7 +17,7 @@ namespace TakenbeheerSysteem.Pages.Employee
 
         public void OnGet()
         {
-            Input = _employeeService.GetEmployee(HttpContext.Session.GetInt32("uId") ?? 0);
+            Input = _employeeService.GetEmployee(HttpContext.Session.GetInt32("employeeTarget") ?? 0);
         }
 
         public ActionResult OnPost()
@@ -33,11 +33,11 @@ namespace TakenbeheerSysteem.Pages.Employee
                 );
             if (_employeeService.UpdateEmployee(employee))
             {
-                return Redirect("Employee/Index");
+                return Redirect("Index");
             }
             else
             {
-                return Redirect("Employee/Create");
+                return Redirect("Edit");
             }
         }
 

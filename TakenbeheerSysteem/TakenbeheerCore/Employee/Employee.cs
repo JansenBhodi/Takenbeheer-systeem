@@ -44,6 +44,7 @@ namespace TakenbeheerCore.Employee
         {
             _id = entry.Id;
             _teamId = entry.TeamId;
+            _role = (WorkRole)entry.Role;
             _name = entry.Name;
             _email = entry.Email;
             _password = entry.Password;

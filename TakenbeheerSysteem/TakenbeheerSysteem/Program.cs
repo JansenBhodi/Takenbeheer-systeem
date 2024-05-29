@@ -27,7 +27,11 @@ namespace TakenbeheerSysteem
                 var logger = sp.GetRequiredService<ILogger<TaskRepository>>();
                 return new TaskRepository(logger);
             });
-            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddScoped<IEmployeeRepository>(sp =>
+            {
+                var logger = sp.GetRequiredService<ILogger<EmployeeRepository>>();
+                return new EmployeeRepository(logger);
+            });
             builder.Services.AddScoped<ITeamRepository, TeamRepository>();
             //builder.Services.AddScoped<ISubtaskRepository, SubtaskRepository>();
 

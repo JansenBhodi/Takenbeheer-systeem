@@ -25,7 +25,7 @@ namespace TakenbeheerSysteem.Pages.Task
             if (Request.Form["Submit"] == "View")
             {
                 HttpContext.Session.SetInt32("taskId", int.Parse(Request.Form["Checker"]));
-                return Redirect("Details");
+                return Redirect("Task/Details");
             }
 
             return Redirect("Index");

@@ -16,9 +16,9 @@ namespace TakenbeheerSysteem.Pages.Employee
         public TeamModel Team;
 
 
-        public IndexModel([FromServices] ITeamRepository teamRepo)
+        public IndexModel([FromServices] ITeamRepository teamRepo, [FromServices] IEmployeeRepository empRepo)
         {
-            _employeeService = new EmployeeService(new EmployeeRepository());
+            _employeeService = new EmployeeService(empRepo);
             _teamService = new TeamService(teamRepo);
         }
 
@@ -51,7 +51,7 @@ namespace TakenbeheerSysteem.Pages.Employee
                     return Redirect("Employee/Delete");
                     break;
                 case "Create":
-                    return Redirect("Employee/Create");
+                    return Redirect("/Employee/Create");
                     break;
                 case "Team Details":
                     return Redirect("~/Team/Details");

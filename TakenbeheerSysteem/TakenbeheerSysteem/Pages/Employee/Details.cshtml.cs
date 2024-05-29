@@ -37,9 +37,12 @@ namespace TakenbeheerSysteem.Pages.Employee
                     return Redirect("~/Task/Details");
                     break;
                 case "Edit":
+                    HttpContext.Session.SetInt32("employeeTarget", int.Parse(Request.Form["Input"]));
                     return Redirect("Edit");
                     break;
                 case "Add task":
+                    HttpContext.Session.SetInt32("employeeTarget", int.Parse(Request.Form["Input"]));
+                    return Redirect("Connect");
                     break;
             }
             return Redirect("Details");

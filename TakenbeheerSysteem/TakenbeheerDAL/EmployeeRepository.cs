@@ -8,16 +8,17 @@ using System.Threading.Tasks;
 using TakenbeheerCore.Employee;
 using MySqlConnector;
 using System.Reflection.PortableExecutable;
+using Microsoft.Extensions.Logging;
 
 namespace TakenbeheerDAL
 {
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly DbConn _conn = new DbConn();
-
-        public EmployeeRepository()
+        private ILogger _logger;
+        public EmployeeRepository(ILogger logger)
         {
-
+            _logger = logger;
         }
 
 		public List<WorkerEmployeeDTO> GetEmployeesByTaskId(int taskId)
@@ -27,7 +28,7 @@ namespace TakenbeheerDAL
 			SqlCommand command = _conn.ConnString.CreateCommand();
 			command.CommandText = "SELECT * FROM Employee e " +
                                   "INNER JOIN TaskEmployeeConnector t ON e.Id = t.EmployeeId " +
-								  "WHERE e.TaskId = @taskid";
+								  "WHERE t.TaskId = @taskid";
 			command.Parameters.AddWithValue("@taskid", taskId);
 
 			List<WorkerEmployeeDTO> result = new List<WorkerEmployeeDTO>();
@@ -241,9 +242,9 @@ namespace TakenbeheerDAL
             return true;
         }
 
-        public WorkerEmployeeDTO? ValidateLogin(string email, string password)
+        public int[]? ValidateLogin(string email, string password)
         {
-            WorkerEmployeeDTO result = null;
+            int[] result = new int[2];
 
             using (SqlCommand cmd = _conn.ConnString.CreateCommand())
             {
@@ -257,15 +258,23 @@ namespace TakenbeheerDAL
                 {
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
+                        int validator = 0;
                         while(reader.Read())
                         {
                             if(email == reader.GetString("Email"))
                             {
-                                result = new WorkerEmployeeDTO(
-                                    reader.GetInt32("Id"),
-                                    reader.GetInt32("Role"));
+                                result[0] = reader.GetInt32("Id");
+                                result[1] = reader.GetInt32("Role");
+                                validator++;
                             }
                         }
+                        if(validator == 0)
+                        {
+                            _conn.ConnString.Close();
+                            _logger.Log(LogLevel.Information, "Login failed, login details were incorrect");
+                            return null;
+                        }
+
                     }
                 }
                 catch (Exception)

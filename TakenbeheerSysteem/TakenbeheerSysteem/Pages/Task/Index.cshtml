@@ -38,7 +38,7 @@
                         @Html.DisplayFor(modelItem => task.Deadline)
                     </td>
                     <td>
-                        <form>
+                        <form method="post">
                             <input type="text" hidden name="Checker" value="@task.Id" />
                             <input type="submit" name="Submit" value="View" />
                         </form>
