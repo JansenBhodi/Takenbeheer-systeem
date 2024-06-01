@@ -19,15 +19,17 @@ namespace TakenbeheerTesting.FakeRepos
         }
         public bool EditTeamById(TeamDTO inputData)
         {
-            return true;
+            if (inputData.Id > 3) return true;
+            else return false;
         }
         public bool DeleteTeamById(int teamId)
         {
             return true;
         }
         public bool CreateTeam(TeamDTO inputData, int employeeId)
-        {
-            return true;
-        }
+		{
+			if (inputData.Id > 3) return true;
+			else return false;
+		}
     }
 }

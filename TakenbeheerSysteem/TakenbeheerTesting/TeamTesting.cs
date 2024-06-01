@@ -67,19 +67,94 @@ namespace TakenbeheerTesting
         }
         #endregion
         #region UpdateTeam
+        // Fail - false - true, validateTeamData skip
+        // Check -> catch databasehandler, result status
+        [Fact]
+        public void UpdateTeamTestError()
+        {
+            Assert.Throws<DatabaseHandlerException>(() => _exceptionService.UpdateTeam(new TeamModel(1, "3465", "dgas", "1253 TW")));
+        }
+		[Fact]
+		public void UpdateTeamTestTrue()
+		{
+            Assert.True(_service.UpdateTeam(new TeamModel(5, "Eindhovense Universiteit", "lampendriessen 31", "5642 RK")));
+		}
+		[Fact]
+		public void UpdateTeamTestFalse()
+		{
+			Assert.False(_service.UpdateTeam(new TeamModel(1, "Eindhovense Universiteit", "lampendriessen 31", "5642 RK")));
+		}
 
+		#endregion
+		#region CreateTeam
+		[Fact]
+		public void CreateTeamTestError()
+		{
+			Assert.Throws<DatabaseHandlerException>(() => _exceptionService.CreateTeam(new TeamModel(1, "3465", "dgas", "1253 TW"), 0));
+		}
+		[Fact]
+		public void CreateTeamTestTrue()
+		{
+			Assert.True(_service.UpdateTeam(new TeamModel(6, "Eindhovense Universiteit", "lampendriessen 31", "5642 RK")));
+		}
+		[Fact]
+		public void CreateTeamTestFalse()
+		{
+			Assert.False(_service.UpdateTeam(new TeamModel(1, "Fontys", "Rachelsmolen 12", "5642 RK")));
+		}
 
-        #endregion
-        #region CreateTeam
+		#endregion
+		#region ValidateTeamData
+		[Fact]
+        public void ValidateTeamDataTestDataException()
+        {
+            TeamModel? test = null;
 
+            Assert.Throws<InvalidDataException>(() => _exceptionService.ValidateTeamData(test));
+        }
 
-        #endregion
-        #region ValidateTeamData
+        [Fact]
+        public void ValidateTeamDataTestFalse()
+        {
+            TeamModel test = new TeamModel(0, "", "", "2345RT");
 
-        #endregion
-        #region ValidateTeamDTO
+            Assert.False(_exceptionService.ValidateTeamData(test));
+        }
 
+        [Fact]
+        public void ValidateTeamDataTestTrue()
+		{
+			TeamModel test = new TeamModel(5, "Johnson Peter", "Valley Road 15", "2345 RT");
 
-        #endregion
-    }
+			Assert.True(_exceptionService.ValidateTeamData(test));
+		}
+
+		#endregion
+		#region ValidateTeamDTO
+
+		[Fact]
+		public void ValidateTeamDTOTestDataException()
+		{
+            TeamDTO? test = null;
+
+			Assert.Throws<InvalidDataException>(() => _exceptionService.ValidateTeamDTO(test));
+		}
+
+		[Fact]
+		public void ValidateTeamDTOTestFalse()
+		{
+			TeamDTO test = new TeamDTO(0, "", "", "2345RT");
+
+			Assert.False(_exceptionService.ValidateTeamDTO(test));
+		}
+
+		[Fact]
+		public void ValidateTeamDTOTestTrue()
+		{
+			TeamDTO test = new TeamDTO(5, "Johnson Peter", "Valley Road 15", "2345 RT");
+
+			Assert.True(_exceptionService.ValidateTeamDTO(test));
+		}
+		#endregion
+	}
 }

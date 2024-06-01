@@ -88,14 +88,8 @@ namespace TakenbeheerCore.Team
                 {
                     throw new DatabaseHandlerException("Repository failed to access database.", ex);
                 }
-                if(result)
-                {
-                    return true;
-                }
-                else
-                {
-                    throw new DatabaseHandlerException("Database could not update entry.");
-                }
+
+                return result;
             }
             return false;
         }
@@ -113,35 +107,46 @@ namespace TakenbeheerCore.Team
                 {
                     throw new DatabaseHandlerException("Repository failed to access database.", ex);
 
-                }
-                if (result)
-                {
-                    return true;
-                }
-                else
-                {
-                    throw new DatabaseHandlerException("Database could not create entry.");
-                }
-            }
+				}
+
+				return result;
+			}
             return false;
         }
 
         public bool ValidateTeamData(TeamModel input)
         {
             //Can be expanded to check things like min/max length - certain rules used in database
-            return (input.Id > 0 &&
-                input.Name.Length > 0 &&
-                input.Address.Length > 0 &&
-                input.PostalCode.Length == 7);
+            try
+			{
+				if (input.Id > 0 &&
+					input.Name.Length > 0 &&
+					input.Address.Length > 0 &&
+					input.PostalCode.Length == 7) return true;
+				else return false;
+			}
+            catch (Exception ex)
+            {
+
+                throw new InvalidDataException("Data does not match check values", ex);
+            }
         }
         public bool ValidateTeamDTO(TeamDTO input)
         {
             //Can be expanded to check things like min/max length - certain rules used in database
-            if (input.Id > 0 &&
-                input.Name.Length > 0 &&
-                input.Address.Length > 0 &&
-                input.PostalCode.Length == 7) return true;
-            else return false;
-        }
+            try
+			{
+				if (input.Id > 0 &&
+					input.Name.Length > 0 &&
+					input.Address.Length > 0 &&
+					input.PostalCode.Length == 7) return true;
+				else return false;
+			}
+            catch (Exception ex)
+            {
+
+				throw new InvalidDataException("Data does not match check values", ex);
+			}
+		}
     }
 }
