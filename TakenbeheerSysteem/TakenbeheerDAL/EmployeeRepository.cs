@@ -21,7 +21,7 @@ namespace TakenbeheerDAL
             _logger = logger;
         }
 
-		public List<WorkerEmployeeDTO> GetEmployeesByTaskId(int taskId)
+		public List<WorkerEmployeeDTO>? GetEmployeesByTaskId(int taskId)
 		{
 			_conn.ConnString.Open();
 

@@ -10,7 +10,7 @@ namespace TakenbeheerCore.Team
     public class TeamService
     {
         private ITeamRepository _teamRepository;
-        public TeamService(ITeamRepository repo) 
+        public TeamService(ITeamRepository repo)
         {
             _teamRepository = repo;
         }
@@ -21,7 +21,7 @@ namespace TakenbeheerCore.Team
             {
                 throw new DataNullException("Required data for retrieval is missing, check if a valid login has been executed.");
             }
-            
+
             TeamModel result;
             TeamDTO? input;
             try
@@ -38,7 +38,11 @@ namespace TakenbeheerCore.Team
             {
                 throw new DataNullException("No data has been retrieved from the database.");
             }
-            
+            else if (!ValidateTeamDTO(input))
+            {
+                throw new DataConversionException("The data retrieved from the database does not match the expected criteria.");
+            }
+
             try
             {
                 result = new TeamModel(input);
@@ -52,14 +56,22 @@ namespace TakenbeheerCore.Team
 
         public bool DeleteTeam(int teamId)
         {
+            bool result = false;
             try
             {
-                _teamRepository.DeleteTeamById(teamId);
+                result = _teamRepository.DeleteTeamById(teamId);
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseHandlerException("Repository failed to access database.", ex);
+            }
+            if(result)
+            {
                 return true;
             }
-            catch (Exception)
+            else
             {
-                return false;
+                throw new DatabaseHandlerException("Database could not delete entry.");
             }
         }
 
@@ -67,14 +79,22 @@ namespace TakenbeheerCore.Team
         {
             if(ValidateTeamData(inputData))
             {
+                bool result = false;
                 try
                 {
-                    _teamRepository.EditTeamById(new TeamDTO(inputData));
-                    return true;
+                    result = _teamRepository.EditTeamById(new TeamDTO(inputData));
                 }
                 catch (Exception ex)
                 {
-                    throw new DatabaseHandlerException("Repository failed to update database entry.", ex);
+                    throw new DatabaseHandlerException("Repository failed to access database.", ex);
+                }
+                if(result)
+                {
+                    return true;
+                }
+                else
+                {
+                    throw new DatabaseHandlerException("Database could not update entry.");
                 }
             }
             return false;
@@ -84,15 +104,23 @@ namespace TakenbeheerCore.Team
         {
             if(ValidateTeamData(inputData))
             {
+                bool result = false;
                 try
                 {
-                    _teamRepository.CreateTeam(new TeamDTO(inputData), employeeId);
-                    return true;
+                    result = _teamRepository.CreateTeam(new TeamDTO(inputData), employeeId);
                 }
                 catch (Exception ex)
                 {
-                    throw new DatabaseHandlerException("Repository failed to create database entry.", ex);
+                    throw new DatabaseHandlerException("Repository failed to access database.", ex);
 
+                }
+                if (result)
+                {
+                    return true;
+                }
+                else
+                {
+                    throw new DatabaseHandlerException("Database could not create entry.");
                 }
             }
             return false;
@@ -105,6 +133,15 @@ namespace TakenbeheerCore.Team
                 input.Name.Length > 0 &&
                 input.Address.Length > 0 &&
                 input.PostalCode.Length == 7);
+        }
+        public bool ValidateTeamDTO(TeamDTO input)
+        {
+            //Can be expanded to check things like min/max length - certain rules used in database
+            if (input.Id > 0 &&
+                input.Name.Length > 0 &&
+                input.Address.Length > 0 &&
+                input.PostalCode.Length == 7) return true;
+            else return false;
         }
     }
 }
