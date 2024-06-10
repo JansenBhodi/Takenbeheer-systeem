@@ -32,11 +32,11 @@ namespace TakenbeheerSysteem.Pages.Team
 				{
 					//Log what exactly went wrong and show custom error page
 				}
-				return Redirect("~/Index");
+				return RedirectToPage("/Team/Index");
 			}
 			else
 			{
-				return Redirect("Details");
+				return RedirectToPage("/Team/Details");
 			}
 		}
 	}

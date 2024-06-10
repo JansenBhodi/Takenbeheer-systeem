@@ -33,16 +33,16 @@ namespace TakenbeheerSysteem.Pages.Team
                     );
                 if (_service.UpdateTeam(result))
                 {
-                    return Redirect("Details");
+                    return RedirectToPage("/Team/Details");
                 }
                 else
                 {
-                    return Redirect("Create");
+                    return RedirectToPage("/Team/Create");
                 }
             }
             else
             {
-                return Redirect("Details");
+                return RedirectToPage("/Team/Details");
             }
         }
     }

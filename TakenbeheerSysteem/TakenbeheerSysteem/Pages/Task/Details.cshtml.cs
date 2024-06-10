@@ -32,19 +32,19 @@ namespace TakenbeheerSysteem.Pages.Task
             {
                 case "View Employee":
                     HttpContext.Session.SetInt32("employeeId", int.Parse(Request.Form["Checker"]));
-					return Redirect("~/Employee/Details");
+					return RedirectToPage("/Employee/Details");
 				case "Edit":
 					HttpContext.Session.SetInt32("taskId", task.Id);
-					return Redirect("Edit");
+					return RedirectToPage("/Task/Edit");
 				case "Delete":
 					HttpContext.Session.SetInt32("taskId", task.Id);
-					return Redirect("Delete");
+					return RedirectToPage("/Task/Delete");
 				case "View Subtask":
                     HttpContext.Session.SetInt32("subtaskId", int.Parse(Request.Form["Checker"]));
-                    return Redirect("Index");
+                    return RedirectToPage("/Subtask/Index");
                     break;
                 default:
-                    return Redirect("Index");
+                    return RedirectToPage("/Task/Index");
                     break;
             }
         }

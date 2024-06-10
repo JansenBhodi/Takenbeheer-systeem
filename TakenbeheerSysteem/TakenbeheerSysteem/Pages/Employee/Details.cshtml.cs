@@ -34,15 +34,15 @@ namespace TakenbeheerSysteem.Pages.Employee
             {
                 case "View":
                     HttpContext.Session.SetInt32("taskId", int.Parse(Request.Form["Input"]));
-                    return Redirect("~/Task/Details");
+                    return RedirectToPage("/Task/Details");
                     break;
                 case "Edit":
                     HttpContext.Session.SetInt32("employeeTarget", int.Parse(Request.Form["Input"]));
-                    return Redirect("Edit");
+                    return RedirectToPage("/Employee/Edit");
                     break;
                 case "Add task":
                     HttpContext.Session.SetInt32("employeeTarget", int.Parse(Request.Form["Input"]));
-                    return Redirect("Connect");
+                    return RedirectToPage("/Employee/Connect");
                     break;
             }
             return Redirect("Details");

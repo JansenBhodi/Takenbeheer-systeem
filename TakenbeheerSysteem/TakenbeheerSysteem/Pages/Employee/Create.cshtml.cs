@@ -34,11 +34,11 @@ namespace TakenbeheerSysteem.Pages.Employee
                 );
             if(_employeeService.CreateEmployee(employee))
             {
-                return Redirect("Index");
+                return RedirectToPage("/Employee/Index");
             }
             else
             {
-                return Redirect("Create");
+                return RedirectToPage("/Employee/Create");
             }
         }
     }

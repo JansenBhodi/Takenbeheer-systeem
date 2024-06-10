@@ -24,15 +24,13 @@ namespace TakenbeheerSysteem.Pages.Team
             switch (Request.Form["Submit"])
             {
                 case "Edit":
-                    return Redirect("Edit");
+                    return RedirectToPage("/Team/Edit");
                     break;
                 case "Delete":
-                    return Redirect("Delete");
+                    return RedirectToPage("/Team/Delete");
                     break;
-
             }
-
-            return Redirect("Details");
+            return RedirectToPage("/Team/Details");
         }
     }
 }

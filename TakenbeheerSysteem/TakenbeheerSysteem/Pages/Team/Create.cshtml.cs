@@ -39,18 +39,18 @@ namespace TakenbeheerSysteem.Pages.Team
 
                         _employeeService.DecoupleTasksForEmployee(_employeeId);
                         _teamService.CreateTeam(result, _employeeId);
-                        return Redirect("/Details");
+                        return RedirectToPage("/Team/Details");
                     case "Cancel":
-                        return Redirect("~/Index");
+                        return RedirectToPage("/Team/Index");
                 }
             }
             catch (Exception)
             {
 
-                return Redirect("/Create");
+                return RedirectToPage("/Team/Create");
             }
 
-            return Redirect("~/Index");
+            return RedirectToPage("/Team/Index");
         }
     }
 }

@@ -43,21 +43,21 @@ namespace TakenbeheerSysteem.Pages.Employee
                 case "View":
                     employeeId = int.Parse(Request.Form["employeeId"]);
                     HttpContext.Session.SetInt32("employeeId", employeeId);
-                    return Redirect("Employee/Details");
+                    return RedirectToPage("/Employee/Details");
                     break;
                 case "Delete":
                     employeeId = int.Parse(Request.Form["employeeId"]);
                     HttpContext.Session.SetInt32("deleteTarget", employeeId);
-                    return Redirect("Employee/Delete");
+                    return RedirectToPage("/Employee/Delete");
                     break;
                 case "Create":
-                    return Redirect("/Employee/Create");
+                    return RedirectToPage("/Employee/Create");
                     break;
                 case "Team Details":
-                    return Redirect("~/Team/Details");
+                    return RedirectToPage("/Team/Details");
                     break;
                 default:
-                    return Redirect("Employee/Index");
+                    return RedirectToPage("/Employee/Index");
                     break;
             }
 

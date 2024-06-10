@@ -38,9 +38,9 @@
 					Role
 				</th>
 			<tr/>
-			<form method="post">
 			@foreach(var employee in Model.team)
 				{
+				<form method="post">
 					<tr>
 						<td>
 							@employee.Name
@@ -53,8 +53,8 @@
 							<input type="submit" name="Submit" value="View Employee" />
 						</td>
 					</tr>
+				</form>
 				}
-			</form>
 		</table>
 	</div>
 }

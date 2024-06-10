@@ -30,11 +30,11 @@ namespace TakenbeheerSysteem.Pages.Employee
                 {
 					//Log what exactly went wrong and show custom error page
 				}
-				return Redirect("Index");
+				return RedirectToPage("/Employee/Index");
 			}
             else
 			{
-				return Redirect("Index");
+				return RedirectToPage("/Employee/Index");
 			}
         }
     }

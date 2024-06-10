@@ -47,6 +47,7 @@ namespace TakenbeheerTesting
             Assert.Equal(7, outcome.PostalCode.Count());
             Assert.Equivalent(validator, outcome);
 
+            //Equivalent kan een IComparable implementeren zodat je zelf algoritmes kan toevoegen voor het vergelijken van modellen/data
         }
         #endregion
         #region DeleteTeam
@@ -69,6 +70,8 @@ namespace TakenbeheerTesting
         #region UpdateTeam
         // Fail - false - true, validateTeamData skip
         // Check -> catch databasehandler, result status
+
+        //Create a list of teams in the fake repository and update it in there, then throw back the result if that succeeded or not. good way to fake a database
         [Fact]
         public void UpdateTeamTestError()
         {
