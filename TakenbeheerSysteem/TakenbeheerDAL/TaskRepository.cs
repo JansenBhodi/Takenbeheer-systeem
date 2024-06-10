@@ -68,6 +68,61 @@ namespace TakenbeheerDAL
             }
         }
 
+        public List<TaskDTO>? GetTasksByTeamExcludingEmployee(int teamId, int employeeId) 
+        {
+            List<TaskDTO>? result = null;
+
+            using(SqlCommand cmd = _conn.ConnString.CreateCommand())
+            {
+                try
+                {
+                    _conn.ConnString.Open();
+                }
+                catch (Exception ex)
+                {
+                    return null;
+                    throw;
+                }
+
+                cmd.CommandText = "SELECT t.* FROM Task t " +
+                                  "WHERE t.TeamId = @teamid " +
+                                  "AND t.id NOT IN ( " +
+                                  "SELECT c.TaskId FROM TaskEmployeeConnector c " +
+                                  "WHERE c.EmployeeId = @employeeid";
+                cmd.Parameters.AddWithValue("@teamid", teamId);
+                cmd.Parameters.AddWithValue("@employeeid", employeeId);
+
+                try
+                {
+                    using(SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            result.Add(new TaskDTO(
+                                reader.GetInt32("Id"),
+                                reader.GetString("Title"),
+                                reader.GetString("Description"),
+                                reader.GetInt32("Progress"),
+                                DateOnly.FromDateTime(reader.GetDateTime("Deadline")),
+                                reader.GetBoolean("IsVisible")));
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    _conn.ConnString.Close();
+                    return null;
+                    throw;
+                }
+                finally
+                {
+                    _conn.ConnString.Close();
+                }
+            }
+
+            return result;
+        }
+
         public List<TaskDTO>? ReturnAllTasks(int empId)
         {
             List<TaskDTO> result = new List<TaskDTO>();

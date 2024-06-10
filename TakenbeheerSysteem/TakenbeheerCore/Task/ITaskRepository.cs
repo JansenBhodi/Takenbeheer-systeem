@@ -11,6 +11,7 @@ namespace TakenbeheerCore.Task
         public List<TaskDTO> ReturnAllTasks(int empId);
         public List<TaskDTO>? GetTasksByEmployee(int empId);
         public TaskDTO? GetTaskById(int id);
+        public List<TaskDTO>? GetTasksByTeamExcludingEmployee(int teamId, int employeeId);
 
     }
 }

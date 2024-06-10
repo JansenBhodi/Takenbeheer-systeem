@@ -1,8 +1,36 @@
 ﻿@page
 @model TakenbeheerSysteem.Pages.Employee.ConnectModel
 @{
+	<div>
+		<h1>Choose task to add.</h1>
+		<div>
+			<table>
+				<tr>
+					<th>
+						Task Name:
+					</th>
+				</tr>
+				@foreach(var task in Model.tasks)
+				{
+					<form>
+						<tr>
+							<td>
+								@Html.DisplayFor(ModelItem => task.Title)
+							</td>
+							<td>
+								<input type="number" hidden name="Input" value="@task.Id"/>
+								<input type="submit" name="Validator" value="Connect"/>
+							</td>
+						</tr>
+					</form>
+				}
+			</table>
+		</div>
+	</div>
 
-
-
-
+	<div>
+		<form>
+			<input type="submit" name="Validator" value="Cancel" />
+		</form>
+	</div>
 }

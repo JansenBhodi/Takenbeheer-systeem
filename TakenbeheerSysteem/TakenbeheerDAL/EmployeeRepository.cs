@@ -21,48 +21,88 @@ namespace TakenbeheerDAL
             _logger = logger;
         }
 
-		public List<WorkerEmployeeDTO>? GetEmployeesByTaskId(int taskId)
-		{
-			_conn.ConnString.Open();
+        public List<WorkerEmployeeDTO>? GetEmployeesByTaskId(int taskId)
+        {
+            _conn.ConnString.Open();
 
-			SqlCommand command = _conn.ConnString.CreateCommand();
-			command.CommandText = "SELECT * FROM Employee e " +
+            SqlCommand command = _conn.ConnString.CreateCommand();
+            command.CommandText = "SELECT * FROM Employee e " +
                                   "INNER JOIN TaskEmployeeConnector t ON e.Id = t.EmployeeId " +
-								  "WHERE t.TaskId = @taskid";
-			command.Parameters.AddWithValue("@taskid", taskId);
+                                  "WHERE t.TaskId = @taskid";
+            command.Parameters.AddWithValue("@taskid", taskId);
 
-			List<WorkerEmployeeDTO> result = new List<WorkerEmployeeDTO>();
+            List<WorkerEmployeeDTO> result = new List<WorkerEmployeeDTO>();
 
-			try
-			{
-				using (SqlDataReader reader = command.ExecuteReader())
-				{
-					while (reader.Read())
-					{
-						WorkerEmployeeDTO entry = new WorkerEmployeeDTO(
-							reader.GetInt32("Id"),
-							reader.GetInt32("TeamID"),
-							reader.GetInt32("Role"),
-							reader.GetString("Name"),
-							reader.GetString("Email"));
-						result.Add(entry);
-					}
-				}
-			}
-			catch (Exception)
-			{
-				result = null;
+            try
+            {
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        WorkerEmployeeDTO entry = new WorkerEmployeeDTO(
+                            reader.GetInt32("Id"),
+                            reader.GetInt32("TeamID"),
+                            reader.GetInt32("Role"),
+                            reader.GetString("Name"),
+                            reader.GetString("Email"));
+                        result.Add(entry);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                result = null;
 
-			}
-			finally
-			{
-				_conn.ConnString.Close();
-			}
+            }
+            finally
+            {
+                _conn.ConnString.Close();
+            }
 
-			return result;
-		}
+            return result;
+        }
 
-		public List<WorkerEmployeeDTO> GetEmployees(int teamId)
+        public bool ConnectTaskWithEmployee(int empId, int taskId)
+        {
+            bool result = false;
+
+            using(SqlCommand cmd =  _conn.ConnString.CreateCommand())
+            {
+                try
+                {
+                    _conn.ConnString.Open();
+                }
+                catch (Exception)
+                {
+                    return result;
+                }
+
+                cmd.CommandText = "INSERT INTO TaskEmployeeConnector (EmployeeId, TaskId) " +
+                                  "VALUES (@employeeid, @taskid)";
+                cmd.Parameters.AddWithValue("@employeeid", empId);
+                cmd.Parameters.AddWithValue("@taskid", taskId);
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                    result = true;
+                }
+                catch (Exception)
+                {
+                    _conn.ConnString.Close();
+                    return result;
+                }
+                finally
+                {
+                    _conn.ConnString.Close();
+                }
+            }
+
+            return result;
+        }
+
+
+        public List<WorkerEmployeeDTO> GetEmployees(int teamId)
         {
             _conn.ConnString.Open();
 

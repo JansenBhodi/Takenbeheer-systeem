@@ -41,6 +41,7 @@ namespace TakenbeheerSysteem.Pages.Employee
                     return RedirectToPage("/Employee/Edit");
                     break;
                 case "Add task":
+                    HttpContext.Session.SetInt32("TeamId", int.Parse(Request.Form["Checker"]));
                     HttpContext.Session.SetInt32("employeeTarget", int.Parse(Request.Form["Input"]));
                     return RedirectToPage("/Employee/Connect");
                     break;

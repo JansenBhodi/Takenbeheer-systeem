@@ -42,6 +42,28 @@ namespace TakenbeheerCore.Task
             return tasks;
         }
 
+        public List<Worktask> ReturnAllTasksByTeamExcludingEmployee(int teamId, int empId)
+        {
+            List<Worktask> tasks = new List<Worktask>();
+
+            List<TaskDTO> tasksDTO = _taskRepository.GetTasksByTeamExcludingEmployee(teamId, empId);
+
+            foreach (TaskDTO dto in tasksDTO)
+            {
+                Worktask entry = new Worktask(
+                    dto.Id,
+                    dto.Title,
+                    dto.Description,
+                    dto.Progress,
+                    dto.Deadline,
+                    dto.IsVisible
+                    );
+                tasks.Add(entry);
+            }
+
+            return tasks;
+        }
+
         public List<Subtask.Subtask> GetSubtasks(int id)
         {
             List<Subtask.Subtask> subtasks = new List<Subtask.Subtask>();

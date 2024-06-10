@@ -29,6 +29,20 @@ namespace TakenbeheerCore.Employee
             return result;
         }
 
+        public bool ConnectEmployeeWithTask(int empId, int taskId)
+        {
+            bool result = false;
+            try
+            {
+                result = _employeeRepo.ConnectTaskWithEmployee(empId, taskId);
+            }
+            catch (Exception)
+            {
+                return result;
+            }
+            return result;
+        }
+
         public List<WorkerEmployee> GetEmployeesByTaskId(int taskId)
 		{
 			List<WorkerEmployee> result = new List<WorkerEmployee>();
