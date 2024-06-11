@@ -70,7 +70,7 @@ namespace TakenbeheerDAL
 
         public List<TaskDTO>? GetTasksByTeamExcludingEmployee(int teamId, int employeeId) 
         {
-            List<TaskDTO>? result = null;
+            List<TaskDTO>? result = new List<TaskDTO>();
 
             using(SqlCommand cmd = _conn.ConnString.CreateCommand())
             {
@@ -88,7 +88,7 @@ namespace TakenbeheerDAL
                                   "WHERE t.TeamId = @teamid " +
                                   "AND t.id NOT IN ( " +
                                   "SELECT c.TaskId FROM TaskEmployeeConnector c " +
-                                  "WHERE c.EmployeeId = @employeeid";
+                                  "WHERE c.EmployeeId = @employeeid)";
                 cmd.Parameters.AddWithValue("@teamid", teamId);
                 cmd.Parameters.AddWithValue("@employeeid", employeeId);
 
@@ -98,13 +98,14 @@ namespace TakenbeheerDAL
                     {
                         while (reader.Read())
                         {
-                            result.Add(new TaskDTO(
-                                reader.GetInt32("Id"),
-                                reader.GetString("Title"),
-                                reader.GetString("Description"),
-                                reader.GetInt32("Progress"),
-                                DateOnly.FromDateTime(reader.GetDateTime("Deadline")),
-                                reader.GetBoolean("IsVisible")));
+                            TaskDTO input = new TaskDTO(
+								reader.GetInt32("Id"),
+								reader.GetString("Title"),
+								reader.GetString("Description"),
+								reader.GetInt32("Progress"),
+								DateOnly.FromDateTime(reader.GetDateTime("Deadline")),
+								reader.GetBoolean("IsVisible"));
+                            result.Add(input);
                         }
                     }
                 }

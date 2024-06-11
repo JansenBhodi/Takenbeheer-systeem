@@ -35,7 +35,7 @@ namespace TakenbeheerSysteem.Pages.Employee
                 case "Connect":
                     try
                     {
-                        if (employeeService.ConnectEmployeeWithTask(HttpContext.Session.GetInt32("EmployeeId") ?? 0, int.Parse(Request.Form["Input"])))
+                        if (employeeService.ConnectEmployeeWithTask(HttpContext.Session.GetInt32("employeeTarget") ?? 0, int.Parse(Request.Form["Input"])))
                         {
                             return RedirectToPage("/Employee/Details");
                         }
